@@ -9,7 +9,6 @@ obj/
 *.dll
 
 # Executables
-*.exe
 platformer
 /platformer
 
@@ -25,16 +24,3 @@ platformer
 *.swp
 *.swo
 *~
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# CMake (if used later)
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile.cmake
-build/
-
-# SFML config/cache (if any)
