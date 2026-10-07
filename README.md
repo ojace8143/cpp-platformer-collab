@@ -10,4 +10,4 @@ going to use SFML
 
 ## Notes
 
-none
+cpp will be fun after learning some c
