@@ -1,2 +1,13 @@
 # cpp-platformer-collab
-cpp platformer game collaboration with my friend for a school thing
+
+going to use SFML
+
+## TODO list
+- [x] get a basic layout
+- [ ] make a starting script for SFML
+- [ ] plan stuff
+- [ ] lock in
+
+## Notes
+
+none
