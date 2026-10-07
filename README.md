@@ -4,7 +4,7 @@ going to use SFML
 
 ## TODO list
 - [x] get a basic layout
-- [ ] make a starting script for SFML
+- [x] make a starting script for SFML
 - [ ] plan stuff
 - [ ] lock in
 
