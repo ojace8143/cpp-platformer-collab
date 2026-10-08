@@ -14,7 +14,7 @@
 
 // Globals
 #define GRAVITY 9.5f   // Hihger the number, higher the gravity
-#define FRICTION 8.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
+#define FRICTION 11.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
 
 // Colors
 #define BACKGROUND_COLOR sf::Color::Black

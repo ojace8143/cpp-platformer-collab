@@ -26,6 +26,26 @@ struct Player {
   }
 };
 
+struct Platform {
+
+  // Platform stuff
+  sf::RectangleShape shape;
+  float x;
+  float y;
+
+  void setPos(float newX, float newY) {
+    x = newX;
+    y = newY;
+    shape.setPosition({x,y});
+  }
+
+  void init(float x, float y, float width, float height) {
+    shape.setPosition({x,y});
+    shape.setSize({width, height});
+    shape.setFillColor(sf::Color::White);
+  }
+};
+
 int main() {
   sf::RenderWindow window(
     sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), 
@@ -43,6 +63,10 @@ int main() {
   square.shape.setSize({50.f, 50.f});
   square.shape.setFillColor(sf::Color::Yellow);
   square.setPos(390.f, 200.f);
+
+  // make a platform
+  Platform platform1;
+  platform1.init(250.f, 500.f, 300.f, 30.f);
 
   while (window.isOpen()) {
 
@@ -86,6 +110,7 @@ int main() {
 
     window.clear(BACKGROUND_COLOR);
     window.draw(square.shape);
+    window.draw(platform1.shape);
     window.display();
   }
   return 0;
