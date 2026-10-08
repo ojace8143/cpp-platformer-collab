@@ -77,7 +77,7 @@ int main() {
       square.x_velocity = square.x_velocity - square.x_velocity/2; // Proportionately apply friction based on current velocity
     }
     if (square.x_velocity < 0) {
-      square.x_velocity = square.x_velocity + square.x_velocity/2;
+      square.x_velocity = square.x_velocity - square.x_velocity*2;
     }
     square.y_velocity = square.y_velocity + 0.1;
 
