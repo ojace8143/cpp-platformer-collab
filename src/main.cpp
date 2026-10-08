@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main() {
   sf::RenderWindow window(sf::VideoMode({800, 600}), "Platformer");
@@ -20,8 +21,12 @@ int main() {
         window.close();
       }
       if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+        std::cout << "Keypress";
         if (keyPressed->code == sf::Keyboard::Key::Escape) {
-            window.close();
+          window.close();
+        }
+        if (keyPressed->code == sf::Keyboard::Key::Space) {
+          shape2.setPosition({400.f, 200.f});
         }
       }
     }
