@@ -34,8 +34,17 @@ int main() {
         if (keyPressed->code == sf::Keyboard::Key::Escape) {
           window.close();
         }
-        if (keyPressed->code == sf::Keyboard::Key::Space) {
-          square.setPos(square.x, square.y + 10);
+        if (keyPressed->code == sf::Keyboard::Key::Up) {
+          square.setPos(square.x, square.y - 10);
+        }
+        if (keyPressed->code == sf::Keyboard::Key::Down) {
+          square.setPos(square.x, square.y +10);
+        }
+        if (keyPressed->code == sf::Keyboard::Key::Left) {
+          square.setPos(square.x - 10, square.y); 
+        }
+        if (keyPressed->code == sf::Keyboard::Key::Right) {
+          square.setPos(square.x + 10, square.y);
         }
       }
     }
