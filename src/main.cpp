@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "config.hpp"
+
 struct Player {
   sf::RectangleShape shape;
   float x;
@@ -16,7 +18,7 @@ struct Player {
 
 int main() {
   sf::RenderWindow window(sf::VideoMode({800, 600}), "Platformer");
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(FPS_LIMIT);
 
   // init the Player object
   Player square;
@@ -49,7 +51,7 @@ int main() {
       }
     }
 
-    window.clear(sf::Color::Black);
+    window.clear(BACKGROUND_COLOR);
     window.draw(square.shape);
     window.display();
   }
