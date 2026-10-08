@@ -9,12 +9,12 @@
 #define WINDOW_HEIGHT 600
 
 // Player
-#define PLAYER_SPEED 10.f
-#define PLAYER_JUMP_SPEED 15.f
+#define PLAYER_SPEED 300.f
+#define PLAYER_JUMP_SPEED 350.f
 
 // Globals
-#define GRAVITY 1.5f   // Hihger the number, higher the gravity
-#define FRICTION 3.f  // Higher the number, lower the friction. Friction is: velocity - velocity/friction
+#define GRAVITY 9.5f   // Hihger the number, higher the gravity
+#define FRICTION 8.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
 
 // Colors
 #define BACKGROUND_COLOR sf::Color::Black

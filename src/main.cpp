@@ -19,9 +19,9 @@ struct Player {
     shape.setPosition({x,y});
   }
 
-  void updatePos(float xv, float yv, dt) {
-    x = x + x_velocity * dt;
-    y = y + y_velocity * dt;
+  void updatePos(float xv, float yv, float dt) {
+    x = x + xv * dt;
+    y = y + yv * dt;
     shape.setPosition({x,y});
   }
 };
@@ -59,7 +59,7 @@ int main() {
       }
     }
 
-    if (sf::Keyboard::KeyPressed(sf::Keyboard::Key::Up)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
       // square.setPos(square.x, square.y - PLAYER_SPEED);
       square.y_velocity = -PLAYER_JUMP_SPEED;
     }
