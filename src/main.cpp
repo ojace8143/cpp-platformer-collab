@@ -17,7 +17,12 @@ struct Player {
 };
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode({800, 600}), "Platformer");
+  sf::RenderWindow window(
+    sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), 
+    WINDOW_TITLE,
+    sf::Style::Titlebar | sf::Style::Close
+  );
+
   window.setFramerateLimit(FPS_LIMIT);
 
   // init the Player object
@@ -37,16 +42,16 @@ int main() {
           window.close();
         }
         if (keyPressed->code == sf::Keyboard::Key::Up) {
-          square.setPos(square.x, square.y - 10);
+          square.setPos(square.x, square.y - PLAYER_SPEED);
         }
         if (keyPressed->code == sf::Keyboard::Key::Down) {
-          square.setPos(square.x, square.y +10);
+          square.setPos(square.x, square.y + PLAYER_SPEED);
         }
         if (keyPressed->code == sf::Keyboard::Key::Left) {
-          square.setPos(square.x - 10, square.y); 
+          square.setPos(square.x - PLAYER_SPEED, square.y); 
         }
         if (keyPressed->code == sf::Keyboard::Key::Right) {
-          square.setPos(square.x + 10, square.y);
+          square.setPos(square.x + PLAYER_SPEED, square.y);
         }
       }
     }
