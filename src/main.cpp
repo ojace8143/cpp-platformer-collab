@@ -37,29 +37,31 @@ int main() {
         window.close();
       }
       if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-        std::cout << "Keypress";
         if (keyPressed->code == sf::Keyboard::Key::Escape) {
           window.close();
         }
-        if (keyPressed->code == sf::Keyboard::Key::Up) {
-          square.setPos(square.x, square.y - PLAYER_SPEED);
-        }
-        if (keyPressed->code == sf::Keyboard::Key::Down) {
-          square.setPos(square.x, square.y + PLAYER_SPEED);
-        }
-        if (keyPressed->code == sf::Keyboard::Key::Left) {
-          square.setPos(square.x - PLAYER_SPEED, square.y); 
-        }
-        if (keyPressed->code == sf::Keyboard::Key::Right) {
-          square.setPos(square.x + PLAYER_SPEED, square.y);
-        }
       }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+      window.close();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+      square.setPos(square.x, square.y - PLAYER_SPEED);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+      square.setPos(square.x, square.y + PLAYER_SPEED);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+      square.setPos(square.x - PLAYER_SPEED, square.y); 
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+      square.setPos(square.x + PLAYER_SPEED, square.y);
     }
 
     window.clear(BACKGROUND_COLOR);
     window.draw(square.shape);
     window.display();
   }
-
   return 0;
 }
