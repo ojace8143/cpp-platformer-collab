@@ -8,13 +8,15 @@ class Camera {
     // Variables
     float x;
     float y;
-    float speed;
+    float speed = 400.f;
     sf::View view;
 
   public:
     void init(float width, float height) {
       view.setSize({width, height});
-      view.setCenter({width / 2.f, height / 2.f});
+      x = width / 2.f;
+      y = height / 2.f;
+      view.setCenter({x,y});
     }
 
     
@@ -33,6 +35,10 @@ class Camera {
       }
 
       view.setCenter({x,y});
+    }
+
+    sf::View getView() {
+      return view;
     }
 };
 
@@ -199,6 +205,7 @@ int main() {
 
     // Update Camera
     camera.handleInputAndUpdate(dt);
+    window.setView(camera.getView()); // Update window to show camera view
 
     // Draw the window and everything
     window.clear(BACKGROUND_COLOR);
