@@ -69,15 +69,23 @@ class Player {
     }
 
     void checkCollision(sf::FloatRect hitbox) {
-
-      sf::FloatRect bounds = shape.getGlobalBounds();
-
-      if (bounds.findIntersection(hitbox)) {
+      // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
+      shape.setPosition({x, old_y});
+      if (shape.getGlobalBounds().findIntersection(hitbox)) {
         x = old_x;
-        y = old_y;
-
-        y_velocity = 0;
+        x_velocity = 0.f;
       }
+
+      // check y axis: uses the corrected x to test the new y. only y is zeroed like x, therefore wall contact still lets you fall.
+      shape.setPosition({x, y});
+      if (shape.getGlobalBounds().findIntersection(hitbox)) {
+        y = old_y;
+        y_velocity = 0.f;
+      }
+
+      // checking x before y is important here.
+
+      shape.setPosition({x, y});
     } 
 };
 
