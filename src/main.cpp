@@ -93,7 +93,7 @@ class Player {
     }
 
     void handleInput() {
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && onGround) {
+      if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && onGround) || PLAYER_INFINITE_JUMP) {
         y_velocity = -PLAYER_JUMP_SPEED;
       }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {

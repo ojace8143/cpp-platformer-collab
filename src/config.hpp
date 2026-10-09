@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 // Window
 #define FPS_LIMIT 60
@@ -20,6 +21,8 @@
 #define PLAYER_HEIGHT 50.f
 
 #define PLAYER_COLOR sf::Color::Yellow
+
+#define PLAYER_INFINITE_JUMP false
 
 // Camera
 #define CAMERA_SPEED 400.f
