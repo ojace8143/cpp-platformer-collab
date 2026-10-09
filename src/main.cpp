@@ -46,6 +46,7 @@ class Player {
   private:
     // Player Variables
     sf::RectangleShape shape;
+    bool onGround = false;
     float x;
     float y;
     float old_x;
@@ -74,6 +75,7 @@ class Player {
     void update(float dt) {
       old_x = x;
       old_y = y;
+      onGround = false;
 
       if (x_velocity != 0.f) {
         x_velocity = x_velocity - (x_velocity/FRICTION) * dt * 60.f; // Proportionately apply friction based on current velocity.
@@ -91,7 +93,7 @@ class Player {
     }
 
     void handleInput() {
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && onGround) {
         y_velocity = -PLAYER_JUMP_SPEED;
       }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
@@ -110,6 +112,10 @@ class Player {
       window.draw(shape);
     }
 
+    bool canJump() {
+      return onGround;
+    }
+
     void checkCollision(sf::FloatRect hitbox) {
       // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
       shape.setPosition({x, old_y});
@@ -120,7 +126,11 @@ class Player {
 
       // check y axis: uses the corrected x to test the new y. only y is zeroed like x, therefore wall contact still lets you fall.
       shape.setPosition({x, y});
-      if (shape.getGlobalBounds().findIntersection(hitbox)) {
+      float playerHeight = shape.getGlobalBounds().size.y;
+      if (shape.getGlobalBounds().findIntersection(hitbox) &&
+          y_velocity >= 0.f &&
+          old_y + playerHeight - 1.f <= hitbox.position.y) {
+        onGround = true;
         y = old_y;
         y_velocity = 0.f;
       }
