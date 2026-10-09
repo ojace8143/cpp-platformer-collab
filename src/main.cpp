@@ -3,6 +3,39 @@
 
 #include "config.hpp"
 
+class Camera {
+  private:
+    // Variables
+    float x;
+    float y;
+    float speed;
+    sf::View view;
+
+  public:
+    void init(float width, float height) {
+      view.setSize({width, height});
+      view.setCenter({width / 2.f, height / 2.f});
+    }
+
+    
+    void handleInputAndUpdate(float dt) {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+        y = y - (speed * dt);
+      }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+        y = y + (speed * dt);
+      }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+        x = x - (speed * dt);
+      }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        x = x + (speed * dt);
+      }
+
+      view.setCenter({x,y});
+    }
+};
+
 class Player {
   private:
     // Player Variables
@@ -130,6 +163,8 @@ int main() {
   // Deltatime Clock init
   sf::Clock deltaClock;
   
+  Camera camera;
+  camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
   // init the Player object
   Player square;
   square.init(0.f, 0.f, 50.f, 50.f, sf::Color::Yellow);
@@ -162,6 +197,10 @@ int main() {
     square.checkCollision(platform1.getBounds());
     square.checkCollision(platform2.getBounds());
 
+    // Update Camera
+    camera.handleInputAndUpdate(dt);
+
+    // Draw the window and everything
     window.clear(BACKGROUND_COLOR);
 
     window.draw(platform1.shape);
