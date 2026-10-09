@@ -8,7 +8,7 @@ class Camera {
     // Variables
     float x;
     float y;
-    float speed = 400.f;
+    float speed = CAMERA_SPEED;
     sf::View view;
 
   public:
@@ -173,7 +173,7 @@ int main() {
   camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
   // init the Player object
   Player square;
-  square.init(0.f, 0.f, 50.f, 50.f, sf::Color::Yellow);
+  square.init(PLAYER_INITIAL_X, PLAYER_INITIAL_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLOR);
 
   // make a platform
   Platform platform1;
