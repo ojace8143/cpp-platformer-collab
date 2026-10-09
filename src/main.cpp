@@ -36,7 +36,7 @@ class Player {
       old_x = x;
       old_y = y;
 
-      if (x != 0.f) {
+      if (x_velocity != 0.f) {
         x_velocity = x_velocity - (x_velocity/FRICTION); // Proportionately apply friction based on current velocity
       }
 
