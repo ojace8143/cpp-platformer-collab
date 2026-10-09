@@ -44,6 +44,9 @@ class Player {
       y = y + y_velocity * dt;
 
       y_velocity = y_velocity + GRAVITY;
+      if (y_velocity > PLAYER_MAX_FALL_SPEED) {
+        y_velocity = PLAYER_MAX_FALL_SPEED;
+      }
 
       shape.setPosition({x,y});
     }
