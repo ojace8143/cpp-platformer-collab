@@ -1,16 +1,25 @@
 # cpp-platformer-collab
 
-going to use SFML
+## How to play
+clone the repo:\
+`git clone https://github.com/ojace8143/cpp-platformer-collab`
+
+compile it\
+`make`
+
+then run the binary\
+`./bin/platformer`
 
 ## TODO list
 - [x] get a basic layout
 - [x] make a starting script for SFML
 - [x] Smooth movement
 - [x] Deltatime movement
-- [ ] Make platform struct
-- [ ] Collision
+- [x] Make platform struct
+- [x] Collision
 - [ ] Make sure everything has a config in config.hpp
-- [ ] Scrolling
+- [ ] multiple platforms
+- [ ] Scrolling (with wasd)
 - [ ] plan stuff (toby lock in)
 - [ ] lock in
 - [ ] cooler name
