@@ -17,9 +17,9 @@ then run the binary\
 - [x] Deltatime movement
 - [x] Make platform struct
 - [x] Collision
-- [ ] Make sure everything has a config in config.hpp
-- [ ] multiple platforms
-- [ ] Scrolling (with wasd)
+- [x] Make sure everything has a config in config.hpp
+- [x] multiple platforms
+- [x] Scrolling (with wasd)
 - [ ] plan stuff (toby lock in)
 - [ ] lock in
 - [ ] cooler name
