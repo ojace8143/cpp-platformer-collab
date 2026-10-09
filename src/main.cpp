@@ -9,6 +9,8 @@ class Player {
     sf::RectangleShape shape;
     float x;
     float y;
+    float old_x;
+    float old_y;
     float x_velocity;
     float y_velocity;
 
@@ -31,7 +33,9 @@ class Player {
     }
 
     void update(float dt) {
-      
+      old_x = x;
+      old_y = y;
+
       if (x != 0.f) {
         x_velocity = x_velocity - (x_velocity/FRICTION); // Proportionately apply friction based on current velocity
       }
@@ -63,6 +67,18 @@ class Player {
     void drawPlayer(sf::RenderWindow& window) {
       window.draw(shape);
     }
+
+    void checkCollision(sf::FloatRect hitbox) {
+
+      sf::FloatRect bounds = shape.getGlobalBounds();
+
+      if (bounds.findIntersection(hitbox)) {
+        x = old_x;
+        y = old_y;
+
+        y_velocity = 0;
+      }
+    } 
 };
 
 struct Platform {
@@ -72,16 +88,22 @@ struct Platform {
   float x;
   float y;
 
+  sf::FloatRect bounds = shape.getGlobalBounds();
+
+  sf::FloatRect getBounds() {
+    return bounds = shape.getGlobalBounds();
+  }
+
   void setPos(float newX, float newY) {
     x = newX;
     y = newY;
     shape.setPosition({x,y});
   }
 
-  void init(float x, float y, float width, float height) {
+  void init(float x, float y, float width, float height, sf::Color color) {
     shape.setPosition({x,y});
     shape.setSize({width, height});
-    shape.setFillColor(sf::Color::White);
+    shape.setFillColor(color);
   }
 };
 
@@ -103,7 +125,7 @@ int main() {
 
   // make a platform
   Platform platform1;
-  platform1.init(250.f, 500.f, 300.f, 30.f);
+  platform1.init(250.f, 500.f, 300.f, 30.f, sf::Color::White);
 
   while (window.isOpen()) {
 
@@ -123,6 +145,7 @@ int main() {
     // Update player
     square.handleInput();
     square.update(dt);
+    square.checkCollision(platform1.getBounds());
 
     window.clear(BACKGROUND_COLOR);
 
