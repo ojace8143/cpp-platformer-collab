@@ -37,13 +37,13 @@ class Player {
       old_y = y;
 
       if (x_velocity != 0.f) {
-        x_velocity = x_velocity - (x_velocity/FRICTION); // Proportionately apply friction based on current velocity
+        x_velocity = x_velocity - (x_velocity/FRICTION) * dt * 60.f; // Proportionately apply friction based on current velocity.
       }
 
       x = x + x_velocity * dt;
       y = y + y_velocity * dt;
 
-      y_velocity = y_velocity + GRAVITY;
+      y_velocity = y_velocity + (GRAVITY * dt * 60.f);
       if (y_velocity > PLAYER_MAX_FALL_SPEED) {
         y_velocity = PLAYER_MAX_FALL_SPEED;
       }
@@ -136,7 +136,10 @@ int main() {
 
   // make a platform
   Platform platform1;
-  platform1.init(250.f, 500.f, 300.f, 30.f, sf::Color::White);
+  platform1.init(100.f, 500.f, 300.f, 30.f, sf::Color::White);
+
+  Platform platform2;
+  platform2.init(200.f, 300.f, 200.f, 30.f, sf::Color::White);
 
   while (window.isOpen()) {
 
@@ -157,10 +160,12 @@ int main() {
     square.handleInput();
     square.update(dt);
     square.checkCollision(platform1.getBounds());
+    square.checkCollision(platform2.getBounds());
 
     window.clear(BACKGROUND_COLOR);
 
     window.draw(platform1.shape);
+    window.draw(platform2.shape);
     square.drawPlayer(window);
 
     window.display();
