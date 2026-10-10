@@ -27,21 +27,26 @@ class Camera {
     }
 
     
-    void handleInputAndUpdate(float dt) {
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-        y = y - (speed * dt);
+    void handleInputAndUpdate(float dt, float playerX, float playerY) {
+      if (!CAMERA_FOLLOW_PLAYER) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+          y = y - (speed * dt);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+          y = y + (speed * dt);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+          x = x - (speed * dt);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+          x = x + (speed * dt);
+        }
+        
+        view.setCenter({x,y});
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-        y = y + (speed * dt);
+      else if (CAMERA_FOLLOW_PLAYER) {
+        view.setCenter({playerX, playerY});
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-        x = x - (speed * dt);
-      }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-        x = x + (speed * dt);
-      }
-
-      view.setCenter({x,y});
     }
 
     sf::View getView() {
@@ -115,6 +120,14 @@ class Player {
       return bounds = shape.getGlobalBounds();
     }
     
+    float getX() {
+      return x;
+    }
+
+    float getY() {
+      return y;
+    }
+
     void drawPlayer(sf::RenderWindow& window) {
       window.draw(shape);
     }
@@ -252,7 +265,7 @@ int main() {
       } 
 
       square.drawPlayer(window);
-      camera.handleInputAndUpdate(dt);
+      camera.handleInputAndUpdate(dt, square.getX(), square.getY());
     }
 
     if (gameState == GameState::Paused) {

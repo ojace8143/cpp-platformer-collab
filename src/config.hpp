@@ -26,6 +26,7 @@
 
 // Camera
 #define CAMERA_SPEED 400.f
+#define CAMERA_FOLLOW_PLAYER true
 
 // Globals
 #define GRAVITY 9.5f   // Hihger the number, higher the gravity
