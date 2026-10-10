@@ -188,15 +188,21 @@ int main() {
   Player square;
   square.init(PLAYER_INITIAL_X, PLAYER_INITIAL_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLOR);
 
-  // make a platform
+  // Create a vector (vectorrr oh yeahhhhh) with the platforms
+  std::vector<Platform> platforms;
+
+  // make platforms, add them to the vector platforms as we make them
   Platform platform1;
   platform1.init(100.f, 500.f, 300.f, 30.f, sf::Color::White);
+  platforms.push_back(platform1);
 
   Platform platform2;
   platform2.init(200.f, 300.f, 200.f, 30.f, sf::Color::White);
+  platforms.push_back(platform2);
 
   Platform platform3;
   platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
+  platforms.push_back(platform3);
 
   while (window.isOpen()) {
 
@@ -216,9 +222,12 @@ int main() {
     // Update player
     square.handleInput();
     square.update(dt);
-    square.checkCollision(platform1.getBounds());
-    square.checkCollision(platform2.getBounds());
-    square.checkCollision(platform3.getBounds());
+    // square.checkCollision(platform1.getBounds());
+    // square.checkCollision(platform2.getBounds());
+    // square.checkCollision(platform3.getBounds());
+    for (auto& platform : platforms) {
+      square.checkCollision(platform.getBounds());
+    }
 
     // Update Camera
     camera.handleInputAndUpdate(dt);
@@ -227,9 +236,13 @@ int main() {
     // Draw the window and everything
     window.clear(BACKGROUND_COLOR);
 
-    window.draw(platform1.shape);
-    window.draw(platform2.shape);
-    window.draw(platform3.shape);
+    // window.draw(platform1.shape);
+    // window.draw(platform2.shape);
+    // window.draw(platform3.shape);
+    for (auto& platform : platforms) {
+      window.draw(platform.shape);
+    }
+
     square.drawPlayer(window);
 
     window.display();

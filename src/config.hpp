@@ -22,7 +22,7 @@
 
 #define PLAYER_COLOR sf::Color::Yellow
 
-#define PLAYER_INFINITE_JUMP false
+#define PLAYER_INFINITE_JUMP true
 
 // Camera
 #define CAMERA_SPEED 400.f
