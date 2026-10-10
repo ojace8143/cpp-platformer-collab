@@ -3,6 +3,13 @@
 
 #include "config.hpp"
 
+// custom data types to track game state, rather than a variable with a number. less confusion, more better.
+enum class GameState {
+  MainMenu,
+  Playing,
+  Paused,
+};
+
 class Camera {
   private:
     // Variables
@@ -177,6 +184,8 @@ int main() {
     sf::Style::Titlebar | sf::Style::Close
   );
 
+  GameState gameState = GameState::Playing;
+
   window.setFramerateLimit(FPS_LIMIT);
 
   // Deltatime Clock init
@@ -216,35 +225,43 @@ int main() {
         if (keyPressed->code == sf::Keyboard::Key::Escape) {
           window.close();
         }
+
+        if (keyPressed->code == sf::Keyboard::Key::Q) {
+          if (gameState == GameState::Playing) {
+            gameState = GameState::Paused;
+          }
+          else if (gameState == GameState::Paused) {
+            gameState = GameState::Playing;
+          }
+        }
       }
     }
 
-    // Update player
-    square.handleInput();
-    square.update(dt);
-    // square.checkCollision(platform1.getBounds());
-    // square.checkCollision(platform2.getBounds());
-    // square.checkCollision(platform3.getBounds());
-    for (auto& platform : platforms) {
-      square.checkCollision(platform.getBounds());
+    window.clear(BACKGROUND_COLOR);
+
+    if (gameState == GameState::Playing) {
+      // Update player, check collisions
+      square.handleInput();
+      square.update(dt);
+      for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
+        square.checkCollision(platform.getBounds());
+      }
+
+      for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
+        window.draw(platform.shape);
+      } 
+
+      square.drawPlayer(window);
+      camera.handleInputAndUpdate(dt);
     }
 
-    // Update Camera
-    camera.handleInputAndUpdate(dt);
+    if (gameState == GameState::Paused) {
+      // pass
+    }
+
     window.setView(camera.getView()); // Update window to show camera view
 
     // Draw the window and everything
-    window.clear(BACKGROUND_COLOR);
-
-    // window.draw(platform1.shape);
-    // window.draw(platform2.shape);
-    // window.draw(platform3.shape);
-    for (auto& platform : platforms) {
-      window.draw(platform.shape);
-    }
-
-    square.drawPlayer(window);
-
     window.display();
   }
   return 0;
