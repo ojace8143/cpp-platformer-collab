@@ -22,7 +22,10 @@ then run the binary\
 - [x] Scrolling (with wasd)
 - [ ] plan stuff (toby lock in)
 - [ ] background
+- [ ] make text struct
+- [ ] make button class
 - [ ] parallax background
+- [x] game states
 - [ ] gameplay loop
 - [ ] buttons
 - [ ] title screen
@@ -34,6 +37,6 @@ then run the binary\
 
 ## Notes
 
-cpp will be fun after learning some c
-
 i MIGHT have just fallen in love with cpp.....
+
+atp just making an entire game engine (when i'm done i'll make a fork with the actual engine stuff)
