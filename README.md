@@ -22,7 +22,7 @@ then run the binary\
 - [x] Scrolling (with wasd)
 - [ ] plan stuff (toby lock in)
 - [ ] background
-- [ ] make text struct
+- [x] make text struct
 - [ ] make button class
 - [ ] parallax background
 - [x] game states

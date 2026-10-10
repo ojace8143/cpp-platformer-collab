@@ -36,4 +36,4 @@
 #define BACKGROUND_COLOR sf::Color::Black
 
 // Text
-#define TEXT_FONT_PATH "assets/fonts/Silkscreen-Regular.ttf"
+#define TEXT_FONT_PATH "assets/fonts/Silkscreen-Bold.ttf"
