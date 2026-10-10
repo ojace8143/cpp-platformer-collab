@@ -24,6 +24,10 @@ then run the binary\
 - [ ] background
 - [ ] parallax background
 - [ ] gameplay loop
+- [ ] buttons
+- [ ] title screen
+- [ ] pause buttons
+- [ ] menus
 - [ ] hire playtesters
 - [x] lock in
 - [ ] cooler name (think of a name for the game)
