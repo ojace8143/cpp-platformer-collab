@@ -52,6 +52,10 @@ class Camera {
     sf::View getView() {
       return view;
     }
+
+    void setCenter(float x, float y) {
+      view.setCenter({x,y});
+    }
 };
 
 class Player {
@@ -116,17 +120,10 @@ class Player {
       }
     }
 
-    sf::FloatRect getBounds() {
-      return bounds = shape.getGlobalBounds();
-    }
-    
-    float getX() {
-      return x;
-    }
-
-    float getY() {
-      return y;
-    }
+    // get() functions for use in other classes/structs, or just for when i need it
+    sf::FloatRect getBounds() { return bounds = shape.getGlobalBounds(); }
+    float         getX()      { return x; }
+    float         getY()      { return y; }
 
     void drawPlayer(sf::RenderWindow& window) {
       window.draw(shape);
@@ -168,8 +165,11 @@ struct Platform {
 
   // Platform stuff
   sf::RectangleShape shape;
+  sf::Color color;
   float x;
   float y;
+  float width;
+  float height;
 
   sf::FloatRect bounds = shape.getGlobalBounds();
 
@@ -183,12 +183,50 @@ struct Platform {
     shape.setPosition({x,y});
   }
 
-  void init(float x, float y, float width, float height, sf::Color color) {
+  void init(float startX, float startY, float startWidth, float startHeight, sf::Color startColor) {
+    x = startX;
+    y = startY;
+    width = startWidth;
+    height = startHeight;
+    color = startColor;
+
     shape.setPosition({x,y});
     shape.setSize({width, height});
     shape.setFillColor(color);
   }
 };
+
+struct Text {
+  
+  // Variables
+  float x;
+  float y;
+  sf::Font font;
+  sf::Text* text = nullptr;
+
+  ~Text() {
+    delete text;
+  }
+
+  void init(float startX, float startY, const std::string& startText, sf::Color startColor) {
+    x = startX;
+    y = startY;
+
+    // set up the text
+    font.openFromFile(TEXT_FONT_PATH);
+
+    text = new sf::Text(font, startText, 24);
+    text->setFillColor(startColor);
+    text->setPosition({x,y});
+  }
+  
+  void draw(sf::RenderWindow& window) {
+    if (text != nullptr) {
+      window.draw(*text);
+    }
+  }
+};
+
 
 int main() {
   sf::RenderWindow window(
@@ -225,6 +263,10 @@ int main() {
   Platform platform3;
   platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
   platforms.push_back(platform3);
+
+  // make pause text
+  Text pauseText;
+  pauseText.init(300.f, 400.f, "PAUSED", sf::Color::White);
 
   while (window.isOpen()) {
 
@@ -269,7 +311,8 @@ int main() {
     }
 
     if (gameState == GameState::Paused) {
-      // pass
+      camera.setCenter(300.f, 400.f);
+      pauseText.draw(window);
     }
 
     window.setView(camera.getView()); // Update window to show camera view

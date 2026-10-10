@@ -22,15 +22,18 @@
 
 #define PLAYER_COLOR sf::Color::Yellow
 
-#define PLAYER_INFINITE_JUMP true
+#define PLAYER_INFINITE_JUMP false
 
 // Camera
 #define CAMERA_SPEED 400.f
 #define CAMERA_FOLLOW_PLAYER true
 
 // Globals
-#define GRAVITY 9.5f   // Hihger the number, higher the gravity
+#define GRAVITY  9.5f  // Hihger the number, higher the gravity
 #define FRICTION 11.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
 
 // Colors
 #define BACKGROUND_COLOR sf::Color::Black
+
+// Text
+#define TEXT_FONT_PATH "assets/fonts/Silkscreen-Regular.ttf"
