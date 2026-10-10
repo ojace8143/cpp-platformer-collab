@@ -126,13 +126,16 @@ class Player {
 
       // check y axis: uses the corrected x to test the new y. only y is zeroed like x, therefore wall contact still lets you fall.
       shape.setPosition({x, y});
-      float playerHeight = shape.getGlobalBounds().size.y;
-      if (shape.getGlobalBounds().findIntersection(hitbox) &&
-          y_velocity >= 0.f &&
-          old_y + playerHeight - 1.f <= hitbox.position.y) {
-        onGround = true;
-        y = old_y;
-        y_velocity = 0.f;
+      if (auto intersection = shape.getGlobalBounds().findIntersection(hitbox)) {
+        if (y_velocity > 0.f) {
+          onGround = true;
+          y = hitbox.position.y - shape.getGlobalBounds().size.y;
+          y_velocity = 0.f;
+        }
+        else if (y_velocity < 0.f ) {
+          y = hitbox.position.y + hitbox.size.y;
+          y_velocity = 0.f;
+        }
       }
 
       // checking x before y is important here.
@@ -192,6 +195,9 @@ int main() {
   Platform platform2;
   platform2.init(200.f, 300.f, 200.f, 30.f, sf::Color::White);
 
+  Platform platform3;
+  platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
+
   while (window.isOpen()) {
 
     float dt = deltaClock.restart().asSeconds();
@@ -212,6 +218,7 @@ int main() {
     square.update(dt);
     square.checkCollision(platform1.getBounds());
     square.checkCollision(platform2.getBounds());
+    square.checkCollision(platform3.getBounds());
 
     // Update Camera
     camera.handleInputAndUpdate(dt);
@@ -222,6 +229,7 @@ int main() {
 
     window.draw(platform1.shape);
     window.draw(platform2.shape);
+    window.draw(platform3.shape);
     square.drawPlayer(window);
 
     window.display();

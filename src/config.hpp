@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Window
-#define FPS_LIMIT 60
+#define FPS_LIMIT 60 
 #define WINDOW_TITLE  "Platformer"
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
@@ -22,7 +22,7 @@
 
 #define PLAYER_COLOR sf::Color::Yellow
 
-#define PLAYER_INFINITE_JUMP true
+#define PLAYER_INFINITE_JUMP false
 
 // Camera
 #define CAMERA_SPEED 400.f
