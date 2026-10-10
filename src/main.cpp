@@ -45,13 +45,15 @@ class Camera {
         view.setCenter({x,y});
       }
       else if (CAMERA_FOLLOW_PLAYER) {
+        x = playerX;
+        y = playerY;
         view.setCenter({playerX, playerY});
       }
     }
 
-    sf::View getView() {
-      return view;
-    }
+    sf::View getView() { return view; }
+    float    getX()    { return x; }
+    float    getY()    { return y; }
 
     void setCenter(float x, float y) {
       view.setCenter({x,y});
@@ -213,7 +215,9 @@ struct Text {
     y = startY;
 
     // set up the text
-    font.openFromFile(TEXT_FONT_PATH);
+    if (!font.openFromFile(TEXT_FONT_PATH)) {
+      std::cout << "ERROR: could not load font file";
+    }
 
     text = new sf::Text(font, startText, 24);
     text->setFillColor(startColor);
@@ -224,6 +228,10 @@ struct Text {
     if (text != nullptr) {
       window.draw(*text);
     }
+  }
+
+  void setPos(float x,float y) {
+    text->setPosition({x,y});
   }
 };
 
@@ -311,7 +319,7 @@ int main() {
     }
 
     if (gameState == GameState::Paused) {
-      camera.setCenter(300.f, 400.f);
+      pauseText.setPos(camera.getX(), camera.getY());
       pauseText.draw(window);
     }
 
