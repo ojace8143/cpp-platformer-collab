@@ -21,8 +21,12 @@ then run the binary\
 - [x] multiple platforms
 - [x] Scrolling (with wasd)
 - [ ] plan stuff (toby lock in)
-- [ ] lock in
-- [ ] cooler name
+- [ ] background
+- [ ] parallax background
+- [ ] gameplay loop
+- [ ] hire playtesters
+- [x] lock in
+- [ ] cooler name (think of a name for the game)
 
 ## Notes
 
