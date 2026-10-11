@@ -9,6 +9,14 @@ compile it\
 
 then run the binary\
 `./bin/platformer`
+or:\
+`make run`
+
+### Config.hpp
+config.hpp has options you can change to alter player settings, camera settings, window settings, and costmetics. also includes some debugs. once you make these changes:\
+`make clean` (to remove compiled binaries) then `make` to recompile. then run the binary as normal.\
+or:
+`make clean run` (which will run it after you recompile)
 
 ## TODO list
 - [x] get a basic layout
@@ -27,7 +35,7 @@ then run the binary\
 - [ ] parallax background
 - [x] game states
 - [ ] gameplay loop
-- [ ] buttons
+- [ ] button struct
 - [ ] title screen
 - [ ] pause buttons
 - [ ] menus
