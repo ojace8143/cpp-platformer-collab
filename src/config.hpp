@@ -11,7 +11,7 @@
 
 // Player
 #define PLAYER_SPEED 300.f
-#define PLAYER_JUMP_SPEED 350.f
+#define PLAYER_JUMP_SPEED 500.f
 #define PLAYER_MAX_FALL_SPEED 500.f
 
 #define PLAYER_INITIAL_X 400.f

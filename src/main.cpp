@@ -8,6 +8,7 @@ enum class GameState {
   MainMenu,
   Playing,
   Paused,
+  GameOver
 };
 
 class Camera {
@@ -135,17 +136,26 @@ class Player {
       return onGround;
     }
 
-    void checkCollision(sf::FloatRect hitbox) {
+    GameState checkCollision(sf::FloatRect hitbox, bool spike) {
       // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
       shape.setPosition({x, old_y});
       if (shape.getGlobalBounds().findIntersection(hitbox)) {
         x = old_x;
         x_velocity = 0.f;
+
+        if (spike) { // if you're colliding with a spike set game state to game over
+          return GameState::GameOver;
+        }
       }
 
       // check y axis: uses the corrected x to test the new y. only y is zeroed like x, therefore wall contact still lets you fall.
       shape.setPosition({x, y});
       if (auto intersection = shape.getGlobalBounds().findIntersection(hitbox)) {
+
+        if (spike) { // if you're colliding with a spike set game state to game over
+          return GameState::GameOver;
+        }
+
         if (y_velocity > 0.f) {
           onGround = true;
           y = hitbox.position.y - shape.getGlobalBounds().size.y;
@@ -160,6 +170,7 @@ class Player {
       // checking x before y is important here.
 
       shape.setPosition({x, y});
+      return GameState::Playing;
     } 
 };
 
@@ -195,6 +206,40 @@ struct Platform {
     shape.setPosition({x,y});
     shape.setSize({width, height});
     shape.setFillColor(color);
+  }
+};
+
+struct Spike {
+
+  // Variables
+  sf::CircleShape shape; // We make a CircleShape, but give it 3 points to make it a triangle
+  sf::Color color;
+  float size;
+  float x;
+  float y;
+
+  sf::FloatRect bounds = shape.getGlobalBounds();
+
+  sf::FloatRect getBounds() {
+    return bounds = shape.getGlobalBounds();
+  }
+
+  void setPos(float newX, float newY) {
+    x = newX;
+    y = newY;
+    shape.setPosition({x,y});
+  }
+
+  void init(float startX, float startY, float startSize, sf::Color startColor) {
+    x = startX;
+    y = startY;
+    color = startColor;
+    size = startSize;
+
+    shape.setPointCount(3);
+    shape.setPosition({x,y});
+    shape.setFillColor(color);
+    shape.setRadius(size);
   }
 };
 
@@ -249,7 +294,7 @@ int main() {
 
   // Deltatime Clock init
   sf::Clock deltaClock;
-  
+ 
   Camera camera;
   camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
   // init the Player object
@@ -258,6 +303,7 @@ int main() {
 
   // Create a vector (vectorrr oh yeahhhhh) with the platforms
   std::vector<Platform> platforms;
+  std::vector<Spike>    spikes;
 
   // make platforms, add them to the vector platforms as we make them
   Platform platform1;
@@ -272,9 +318,17 @@ int main() {
   platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
   platforms.push_back(platform3);
 
+  // Make a spike(s)
+  Spike spike1;
+  spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
+  spikes.push_back(spike1);
+
   // make pause text
   Text pauseText;
   pauseText.init(300.f, 400.f, "PAUSED", sf::Color::White);
+  
+  Text gameOverText;
+  gameOverText.init(300.f, 400.f, "GAME OVER", sf::Color::Red);
 
   while (window.isOpen()) {
 
@@ -307,12 +361,18 @@ int main() {
       square.handleInput();
       square.update(dt);
       for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
-        square.checkCollision(platform.getBounds());
+        square.checkCollision(platform.getBounds(), false);
+      }
+      for (auto& spike : spikes) { // Check all collision with spikes in the spikes vector
+        gameState = square.checkCollision(spike.getBounds(), true);
       }
 
       for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
         window.draw(platform.shape);
       } 
+      for (auto& spike : spikes) {
+        window.draw(spike.shape);
+      }
 
       square.drawPlayer(window);
       camera.handleInputAndUpdate(dt, square.getX(), square.getY());
@@ -321,6 +381,11 @@ int main() {
     if (gameState == GameState::Paused) {
       pauseText.setPos(camera.getX(), camera.getY());
       pauseText.draw(window);
+    }
+
+    if (gameState == GameState::GameOver) {
+      gameOverText.setPos(camera.getX(), camera.getY());
+      gameOverText.draw(window);
     }
 
     window.setView(camera.getView()); // Update window to show camera view
