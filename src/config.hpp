@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Window
-#define FPS_LIMIT 60 
+#define FPS_LIMIT 60
 #define WINDOW_TITLE  "Platformer"
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
@@ -26,7 +26,7 @@
 
 // Camera
 #define CAMERA_SPEED 400.f
-#define CAMERA_FOLLOW_PLAYER true
+#define CAMERA_FOLLOW_PLAYER false
 
 // Globals
 #define GRAVITY  9.5f  // Hihger the number, higher the gravity

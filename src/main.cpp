@@ -311,12 +311,16 @@ int main() {
   platforms.push_back(platform1);
 
   Platform platform2;
-  platform2.init(200.f, 300.f, 200.f, 30.f, sf::Color::White);
+  platform2.init(200.f, 700.f, 200.f, 30.f, sf::Color::White);
   platforms.push_back(platform2);
 
   Platform platform3;
   platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
   platforms.push_back(platform3);
+
+  Platform platform4;
+  platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
+  platforms.push_back(platform4);
 
   // Make a spike(s)
   Spike spike1;
