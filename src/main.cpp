@@ -411,9 +411,16 @@ int main() {
         square.checkCollision(platform.getBounds(), false, false);
       }
       for (auto& spike : spikes) { // Check all collision with spikes in the spikes vector
-        gameState = square.checkCollision(spike.getBounds(), true, false);
+        GameState s = square.checkCollision(spike.getBounds(), true, false);
+        if (s != GameState::Playing) {
+          gameState = s;
+          break;
+        }
       }
-      gameState = square.checkCollision(goal.getBounds(), false, true);
+
+      if (gameState == GameState::Playing) { // only check the goal if still playing, otherwise this overwrites a spike's GameOver. we cant have it just in there, because the state can change after we check spike collision and that can break stuff.
+        gameState = square.checkCollision(goal.getBounds(), false, true);
+      }
 
       for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
         window.draw(platform.shape);
