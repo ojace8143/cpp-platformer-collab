@@ -12,6 +12,13 @@ enum class GameState {
   LevelComplete
 };
 
+// data types for types of collisions so i dont have to do like 40 booleans for my collide player function
+enum class CollisionType {
+  Platform,
+  Spike,
+  LevelGoal
+};
+
 class Camera {
   private:
     // Variables
@@ -137,17 +144,17 @@ class Player {
       return onGround;
     }
 
-    GameState checkCollision(sf::FloatRect hitbox, bool spike, bool goal) {
+    GameState checkCollision(sf::FloatRect hitbox, CollisionType collisionType) {
       // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
       shape.setPosition({x, old_y});
       if (shape.getGlobalBounds().findIntersection(hitbox)) {
         x = old_x;
         x_velocity = 0.f;
 
-        if (spike) { // if you're colliding with a spike set game state to game over
+        if (collisionType == CollisionType::Spike) { // if you're colliding with a spike set game state to game over
           return GameState::GameOver;
         }
-        if (goal) {
+        if (collisionType == CollisionType::LevelGoal) {
           return GameState::LevelComplete;
         }
       }
@@ -156,10 +163,10 @@ class Player {
       shape.setPosition({x, y});
       if (auto intersection = shape.getGlobalBounds().findIntersection(hitbox)) {
 
-        if (spike) { // if you're colliding with a spike set game state to game over
+        if (collisionType == CollisionType::Spike) { // if you're colliding with a spike set game state to game over
           return GameState::GameOver;
         }
-        if (goal) {
+        if (collisionType == CollisionType::LevelGoal) {
           return GameState::LevelComplete;
         }
 
@@ -408,10 +415,10 @@ int main() {
       square.handleInput();
       square.update(dt);
       for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
-        square.checkCollision(platform.getBounds(), false, false);
+        square.checkCollision(platform.getBounds(), CollisionType::Platform);
       }
       for (auto& spike : spikes) { // Check all collision with spikes in the spikes vector
-        GameState s = square.checkCollision(spike.getBounds(), true, false);
+        GameState s = square.checkCollision(spike.getBounds(), CollisionType::Spike);
         if (s != GameState::Playing) {
           gameState = s;
           break;
@@ -419,7 +426,7 @@ int main() {
       }
 
       if (gameState == GameState::Playing) { // only check the goal if still playing, otherwise this overwrites a spike's GameOver. we cant have it just in there, because the state can change after we check spike collision and that can break stuff.
-        gameState = square.checkCollision(goal.getBounds(), false, true);
+        gameState = square.checkCollision(goal.getBounds(), CollisionType::LevelGoal);
       }
 
       for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
