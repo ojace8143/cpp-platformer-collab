@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Window
-#define FPS_LIMIT 60
+#define FPS_LIMIT 144
 #define WINDOW_TITLE  "Platformer"
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
