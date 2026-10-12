@@ -8,7 +8,8 @@ enum class GameState {
   MainMenu,
   Playing,
   Paused,
-  GameOver
+  GameOver,
+  LevelComplete
 };
 
 class Camera {
@@ -136,7 +137,7 @@ class Player {
       return onGround;
     }
 
-    GameState checkCollision(sf::FloatRect hitbox, bool spike) {
+    GameState checkCollision(sf::FloatRect hitbox, bool spike, bool goal) {
       // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
       shape.setPosition({x, old_y});
       if (shape.getGlobalBounds().findIntersection(hitbox)) {
@@ -146,6 +147,9 @@ class Player {
         if (spike) { // if you're colliding with a spike set game state to game over
           return GameState::GameOver;
         }
+        if (goal) {
+          return GameState::LevelComplete;
+        }
       }
 
       // check y axis: uses the corrected x to test the new y. only y is zeroed like x, therefore wall contact still lets you fall.
@@ -154,6 +158,9 @@ class Player {
 
         if (spike) { // if you're colliding with a spike set game state to game over
           return GameState::GameOver;
+        }
+        if (goal) {
+          return GameState::LevelComplete;
         }
 
         if (y_velocity > 0.f) {
@@ -172,6 +179,31 @@ class Player {
       shape.setPosition({x, y});
       return GameState::Playing;
     } 
+};
+
+class LevelGoal {
+  private:
+    float x, y;
+    sf::RectangleShape shape;
+    sf::FloatRect bounds = shape.getGlobalBounds();
+
+  public:
+    void init(float startX, float startY, sf::Color color) {
+     x = startX;
+     y = startY;
+
+     shape.setSize({30.f, 30.f});
+     shape.setPosition({x,y});
+     shape.setFillColor(color);
+    }
+
+    void drawGoal(sf::RenderWindow& window) {
+      window.draw(shape);
+    }
+
+    sf::FloatRect getBounds() {
+      return bounds = shape.getGlobalBounds();
+    }
 };
 
 struct Platform {
@@ -322,17 +354,28 @@ int main() {
   platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
   platforms.push_back(platform4);
 
-  // Make a spike(s)
+  Platform platform5;
+  platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
+  platforms.push_back(platform5);
+
+  // Make a spike
   Spike spike1;
   spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
   spikes.push_back(spike1);
 
-  // make pause text
+  // make text objects
   Text pauseText;
   pauseText.init(300.f, 400.f, "PAUSED", sf::Color::White);
   
   Text gameOverText;
   gameOverText.init(300.f, 400.f, "GAME OVER", sf::Color::Red);
+
+  Text levelCompleteText;
+  levelCompleteText.init(300.f, 400.f, "YOU FOUND THE GOAL", sf::Color::Green);
+
+  // make level goal object
+  LevelGoal goal;
+  goal.init(900.f, 500.f, sf::Color::Green);
 
   while (window.isOpen()) {
 
@@ -365,11 +408,12 @@ int main() {
       square.handleInput();
       square.update(dt);
       for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
-        square.checkCollision(platform.getBounds(), false);
+        square.checkCollision(platform.getBounds(), false, false);
       }
       for (auto& spike : spikes) { // Check all collision with spikes in the spikes vector
-        gameState = square.checkCollision(spike.getBounds(), true);
+        gameState = square.checkCollision(spike.getBounds(), true, false);
       }
+      gameState = square.checkCollision(goal.getBounds(), false, true);
 
       for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
         window.draw(platform.shape);
@@ -378,6 +422,7 @@ int main() {
         window.draw(spike.shape);
       }
 
+      goal.drawGoal(window);
       square.drawPlayer(window);
       camera.handleInputAndUpdate(dt, square.getX(), square.getY());
     }
@@ -385,6 +430,11 @@ int main() {
     if (gameState == GameState::Paused) {
       pauseText.setPos(camera.getX(), camera.getY());
       pauseText.draw(window);
+    }
+
+    if (gameState == GameState::LevelComplete) {
+      levelCompleteText.setPos(camera.getX(), camera.getY());
+      levelCompleteText.draw(window);
     }
 
     if (gameState == GameState::GameOver) {
