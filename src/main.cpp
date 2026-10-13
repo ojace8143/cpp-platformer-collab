@@ -191,25 +191,33 @@ class Player {
 class LevelGoal {
   private:
     float x, y;
-    sf::RectangleShape shape;
-    sf::FloatRect bounds = shape.getGlobalBounds();
+    sf::Texture texture;
+    sf::Sprite sprite{texture};
+    sf::FloatRect bounds;
 
   public:
-    void init(float startX, float startY, sf::Color color) {
-     x = startX;
-     y = startY;
+    void init(float startX, float startY) {
 
-     shape.setSize({30.f, 30.f});
-     shape.setPosition({x,y});
-     shape.setFillColor(color);
+      if (!texture.loadFromFile("assets/sprites/end_flag.png")) {
+        std::cout << "error: no sprite asset found";
+      }
+
+      sprite.setTexture(texture, true);
+
+      x = startX;
+      y = startY;
+
+      sprite.setPosition({x,y});
+
+      bounds = sprite.getGlobalBounds();
     }
 
     void drawGoal(sf::RenderWindow& window) {
-      window.draw(shape);
+      window.draw(sprite);
     }
 
     sf::FloatRect getBounds() {
-      return bounds = shape.getGlobalBounds();
+      return bounds = sprite.getGlobalBounds();
     }
 };
 
@@ -382,7 +390,7 @@ int main() {
 
   // make level goal object
   LevelGoal goal;
-  goal.init(900.f, 500.f, sf::Color::Green);
+  goal.init(900.f, 500.f);
 
   while (window.isOpen()) {
 

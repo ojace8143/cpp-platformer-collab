@@ -29,7 +29,7 @@
 #define CAMERA_FOLLOW_PLAYER true 
 
 // Globals
-#define GRAVITY  9.5f  // Hihger the number, higher the gravity
+#define GRAVITY  12.f  // Hihger the number, higher the gravity
 #define FRICTION 11.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
 
 // Colors
