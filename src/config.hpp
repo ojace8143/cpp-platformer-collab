@@ -12,8 +12,8 @@
 
 // Player
 #define PLAYER_SPEED 300.f
-#define PLAYER_JUMP_SPEED 500.f
-#define PLAYER_MAX_FALL_SPEED 500.f
+#define PLAYER_JUMP_SPEED 600.f
+#define PLAYER_MAX_FALL_SPEED 1000.f
 
 #define PLAYER_INITIAL_X 400.f
 #define PLAYER_INITIAL_Y 50.f
@@ -28,10 +28,10 @@
 // Camera
 #define CAMERA_SPEED 400.f
 #define CAMERA_FOLLOW_PLAYER true
-#define CAMERA_SMOOTHING 3.f
+#define CAMERA_SMOOTHING 4.f // higher numbers will make the camera feel snappier
 
 // Globals
-#define GRAVITY  12.f  // Hihger the number, higher the gravity
+#define GRAVITY  22.f  // Hihger the number, higher the gravity
 #define FRICTION 11.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
 
 // Colors

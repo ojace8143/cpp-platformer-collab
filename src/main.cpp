@@ -73,7 +73,7 @@ class Camera {
     float    getX()    { return x; }
     float    getY()    { return y; }
 
-    void setCenter(float d, float y) {
+    void setCenter(float x, float y) {
       view.setCenter({x,y});
     }
 };
