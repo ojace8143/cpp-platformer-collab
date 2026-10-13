@@ -22,8 +22,7 @@ enum class CollisionType {
 class Camera {
   private:
     // Variables
-    float x;
-    float y;
+    float x, y;
     float speed = CAMERA_SPEED;
     sf::View view;
 
@@ -54,9 +53,19 @@ class Camera {
         view.setCenter({x,y});
       }
       else if (CAMERA_FOLLOW_PLAYER) {
-        x = playerX;
-        y = playerY;
-        view.setCenter({playerX, playerY});
+        // x = playerX;
+        // y = playerY;
+        // view.setCenter({playerX, playerY});
+
+        float t = dt * CAMERA_SMOOTHING;
+        if (t > 1.f) { // clamp so the camera doesent overshoot
+          t = 1.f;
+        }
+
+        x = x + (playerX - x) * t;
+        y = y + (playerY - y) * t;
+      
+        view.setCenter({x, y});
       }
     }
 
@@ -64,7 +73,7 @@ class Camera {
     float    getX()    { return x; }
     float    getY()    { return y; }
 
-    void setCenter(float x, float y) {
+    void setCenter(float d, float y) {
       view.setCenter({x,y});
     }
 };
@@ -337,7 +346,11 @@ int main() {
 
   GameState gameState = GameState::Playing;
 
-  window.setFramerateLimit(FPS_LIMIT);
+  if (USE_VSYNC) {
+    window.setVerticalSyncEnabled(true);
+  } else {
+    window.setFramerateLimit(FPS_LIMIT);
+  }
 
   // Deltatime Clock init
   sf::Clock deltaClock;

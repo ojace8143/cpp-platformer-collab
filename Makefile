@@ -1,6 +1,6 @@
 # ?= lets you override from the terminal
 CXX      ?= g++
-CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic
+CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic -O2 -flto
 LDFLAGS  ?=
 LDLIBS   ?= -lsfml-graphics -lsfml-window -lsfml-system
 
