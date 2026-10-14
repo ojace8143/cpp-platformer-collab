@@ -12,14 +12,14 @@
 
 // Player
 #define PLAYER_SPEED 300.f
-#define PLAYER_JUMP_SPEED 600.f
-#define PLAYER_MAX_FALL_SPEED 1000.f
+#define PLAYER_JUMP_SPEED 550.f
+#define PLAYER_MAX_FALL_SPEED 1500.f
 
 #define PLAYER_INITIAL_X 400.f
 #define PLAYER_INITIAL_Y 50.f
 
-#define PLAYER_WIDTH 50.f
-#define PLAYER_HEIGHT 50.f
+#define PLAYER_WIDTH 40.f
+#define PLAYER_HEIGHT 40.f
 
 #define PLAYER_COLOR sf::Color::Yellow
 

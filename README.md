@@ -28,16 +28,16 @@ or:
 - [x] Make sure everything has a config in config.hpp
 - [x] multiple platforms
 - [x] Scrolling (with wasd)
-- [ ] plan stuff (toby lock in)
+- [x] plan stuff (toby lock in)
 - [ ] background
 - [x] make text struct
 - [ ] make button class
+- [x] lerping
 - [ ] parallax background
 - [x] game states
 - [ ] gameplay loop
 - [ ] button struct
-- [ ] title screen
-- [ ] pause buttons
+- [ ] title screen and pause screen
 - [ ] menus
 - [ ] hire playtesters
 - [x] lock in

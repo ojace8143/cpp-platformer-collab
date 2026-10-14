@@ -367,7 +367,7 @@ int main() {
 
   // make platforms, add them to the vector platforms as we make them
   Platform platform1;
-  platform1.init(100.f, 500.f, 300.f, 30.f, sf::Color::White);
+  platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
   platforms.push_back(platform1);
 
   Platform platform2;
