@@ -386,10 +386,22 @@ int main() {
   platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
   platforms.push_back(platform5);
 
+  Platform platform6;
+  platform6.init(200.f, 900.f, 500.f, 30.f, sf::Color::White);
+  platforms.push_back(platform6);
+
+  Platform platform7;
+  platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
+  platforms.push_back(platform7);
+
   // Make a spike
   Spike spike1;
   spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
   spikes.push_back(spike1);
+
+  Spike spike2;
+  spike2.init(250.f, 650.f, 35.f, sf::Color::Red);
+  spikes.push_back(spike2);
 
   // make text objects
   Text pauseText;

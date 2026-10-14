@@ -11,7 +11,7 @@
 #define WINDOW_HEIGHT 600
 
 // Player
-#define PLAYER_SPEED 300.f
+#define PLAYER_SPEED 400.f
 #define PLAYER_JUMP_SPEED 550.f
 #define PLAYER_MAX_FALL_SPEED 1500.f
 
@@ -28,7 +28,7 @@
 // Camera
 #define CAMERA_SPEED 400.f
 #define CAMERA_FOLLOW_PLAYER true
-#define CAMERA_SMOOTHING 4.f // higher numbers will make the camera feel snappier
+#define CAMERA_SMOOTHING 3.f // higher numbers will make the camera feel snappier
 
 // Globals
 #define GRAVITY  22.f  // Hihger the number, higher the gravity
