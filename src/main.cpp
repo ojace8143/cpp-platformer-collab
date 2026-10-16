@@ -128,15 +128,21 @@ class Player {
       shape.setPosition({x,y});
     }
 
-    void handleInput() {
+    void handleInput(float dt) {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && (onGround || PLAYER_INFINITE_JUMP)) {
         y_velocity = -PLAYER_JUMP_SPEED;
       }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-        x_velocity = -PLAYER_SPEED;
+        x_velocity = x_velocity - (PLAYER_SPEED/PLAYER_ACCELERATION) * dt * 60.f;
+        if (x_velocity < -PLAYER_SPEED) {
+          x_velocity = -PLAYER_SPEED;
+        }
       }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-        x_velocity = PLAYER_SPEED;
+        x_velocity = x_velocity + (PLAYER_SPEED/PLAYER_ACCELERATION) * dt * 60.f;
+        if (x_velocity > PLAYER_SPEED) {
+          x_velocity = PLAYER_SPEED;
+        }
       }
     }
 
@@ -425,7 +431,7 @@ int main() {
 
   // make level goal object
   LevelGoal goal;
-  goal.init(900.f, 500.f);
+  goal.init(900.f, 575.f);
 
   while (window.isOpen()) {
 
@@ -464,7 +470,7 @@ int main() {
 
     if (gameState == GameState::Playing) {
       // Update player, check collisions
-      square.handleInput();
+      square.handleInput(dt);
       square.update(dt);
       for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
         square.checkCollision(platform.getBounds(), CollisionType::Platform);
