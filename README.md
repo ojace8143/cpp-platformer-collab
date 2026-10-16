@@ -8,7 +8,7 @@ compile it\
 `make`
 
 then run the binary\
-`./bin/platformer`
+`./bin/platformer`\
 or:\
 `make run`
 
@@ -37,7 +37,7 @@ or:
 - [x] game states
 - [ ] gameplay loop
 - [ ] button struct
-- [ ] title screen and pause screen
+- [x] title screen and pause screen
 - [ ] menus
 - [ ] hire playtesters
 - [x] lock in
