@@ -307,10 +307,6 @@ struct Text {
   sf::Font font;
   sf::Text* text = nullptr;
 
-  ~Text() {
-    delete text;
-  }
-
   void init(float startX, float startY, const std::string& startText, sf::Color startColor) {
     x = startX;
     y = startY;
@@ -344,7 +340,8 @@ int main() {
     sf::Style::Titlebar | sf::Style::Close
   );
 
-  GameState gameState = GameState::Playing;
+  // GameState gameState = GameState::Playing;
+  GameState gameState = GameState::MainMenu;
 
   if (USE_VSYNC) {
     window.setVerticalSyncEnabled(true);
@@ -364,6 +361,7 @@ int main() {
   // Create a vector (vectorrr oh yeahhhhh) with the platforms
   std::vector<Platform> platforms;
   std::vector<Spike>    spikes;
+  std::vector<Text>     mainMenuText;
 
   // make platforms, add them to the vector platforms as we make them
   Platform platform1;
@@ -413,6 +411,18 @@ int main() {
   Text levelCompleteText;
   levelCompleteText.init(300.f, 400.f, "YOU FOUND THE GOAL", sf::Color::Green);
 
+  Text mainMenuTitle;
+  mainMenuTitle.init(300.f, 200.f, "CPP PLATFORMER", sf::Color::White);
+  mainMenuText.push_back(mainMenuTitle);
+
+  Text mainMenuInstructions;
+  mainMenuInstructions.init(25.f, 500.f, "Press Q to play/pause, arrows to move.", sf::Color::Green);
+  mainMenuText.push_back(mainMenuInstructions);
+
+  Text mainMenuCredits;
+  mainMenuCredits.init(300.f, 250.f, "By Jace and Toby", sf::Color::Red);
+  mainMenuText.push_back(mainMenuCredits);
+
   // make level goal object
   LevelGoal goal;
   goal.init(900.f, 500.f);
@@ -437,11 +447,20 @@ int main() {
           else if (gameState == GameState::Paused) {
             gameState = GameState::Playing;
           }
+          else if (gameState == GameState::MainMenu) {
+            gameState = GameState::Playing;
+          }
         }
       }
     }
 
     window.clear(BACKGROUND_COLOR);
+
+    if (gameState == GameState::MainMenu) {
+      for (auto& text : mainMenuText) {
+        text.draw(window);
+      }
+    }
 
     if (gameState == GameState::Playing) {
       // Update player, check collisions
