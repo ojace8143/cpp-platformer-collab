@@ -83,12 +83,7 @@ class Player {
     // Player Variables
     sf::RectangleShape shape;
     bool onGround = false;
-    float x;
-    float y;
-    float old_x;
-    float old_y;
-    float x_velocity;
-    float y_velocity;
+    float x, y, old_x, old_y, x_velocity, y_velocity;
 
     sf::FloatRect bounds = shape.getGlobalBounds();
 
@@ -241,10 +236,7 @@ struct Platform {
   // Platform stuff
   sf::RectangleShape shape;
   sf::Color color;
-  float x;
-  float y;
-  float width;
-  float height;
+  float x, y, width, height;
 
   sf::FloatRect bounds = shape.getGlobalBounds();
 
@@ -276,9 +268,7 @@ struct Spike {
   // Variables
   sf::CircleShape shape; // We make a CircleShape, but give it 3 points to make it a triangle
   sf::Color color;
-  float size;
-  float x;
-  float y;
+  float x, y, size;
 
   sf::FloatRect bounds = shape.getGlobalBounds();
 
@@ -308,8 +298,7 @@ struct Spike {
 struct Text {
   
   // Variables
-  float x;
-  float y;
+  float x, y;
   sf::Font font;
   sf::Text* text = nullptr;
 
