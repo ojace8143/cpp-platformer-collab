@@ -33,7 +33,7 @@ or:
 - [x] make text struct
 - [ ] make button class
 - [x] lerping
-- [ ] checkpoints??? 1/1 <- yes/no
+- [ ] checkpoints??? 3/1 <- yes/no (level 2 will have less checkpoints)
 - [ ] parallax background
 - [x] game states
 - [ ] gameplay loop

@@ -410,7 +410,7 @@ int main() {
   level2Platform1.init(300.f, 500.f, 300.f, 30.f, sf::Color::White);
   level2Platforms.push_back(level2Platform1);
 
-  // make text objects
+  // Game state text
   Text pauseText;
   pauseText.init(300.f, 400.f, "PAUSED", sf::Color::White);
   
@@ -420,6 +420,8 @@ int main() {
   Text levelCompleteText;
   levelCompleteText.init(300.f, 400.f, "YOU FOUND THE GOAL", sf::Color::Green);
 
+
+  // Main Menu objects
   Text mainMenuTitle;
   mainMenuTitle.init(300.f, 200.f, "CPP PLATFORMER", sf::Color::White);
   mainMenuText.push_back(mainMenuTitle);
