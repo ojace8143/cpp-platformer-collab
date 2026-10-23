@@ -19,6 +19,11 @@ enum class CollisionType {
   LevelGoal
 };
 
+enum class Level {
+  Level1,
+  Level2
+};
+
 class Camera {
   private:
     // Variables
@@ -337,6 +342,7 @@ int main() {
 
   // GameState gameState = GameState::Playing;
   GameState gameState = GameState::MainMenu;
+  Level level = Level::Level1;
 
   if (USE_VSYNC) {
     window.setVerticalSyncEnabled(true);
@@ -354,47 +360,55 @@ int main() {
   square.init(PLAYER_INITIAL_X, PLAYER_INITIAL_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLOR);
 
   // Create a vector (vectorrr oh yeahhhhh) with the platforms
-  std::vector<Platform> platforms;
-  std::vector<Spike>    spikes;
+  std::vector<Platform> level1Platforms;
+  std::vector<Platform> level2Platforms;
+  std::vector<Spike>    level1Spikes;
+  std::vector<Spike>    level2Spikes;
   std::vector<Text>     mainMenuText;
 
   // make platforms, add them to the vector platforms as we make them
-  Platform platform1;
-  platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
-  platforms.push_back(platform1);
+  // Level 1
+  Platform level1Platform1;
+  level1Platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform1);
 
-  Platform platform2;
-  platform2.init(200.f, 700.f, 200.f, 30.f, sf::Color::White);
-  platforms.push_back(platform2);
+  Platform level1Platform2;
+  level1Platform2.init(200.f, 700.f, 200.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform2);
 
-  Platform platform3;
-  platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
-  platforms.push_back(platform3);
+  Platform level1Platform3;
+  level1Platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform3);
 
-  Platform platform4;
-  platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
-  platforms.push_back(platform4);
+  Platform level1Platform4;
+  level1Platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform4);
 
-  Platform platform5;
-  platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
-  platforms.push_back(platform5);
+  Platform level1Platform5;
+  level1Platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform5);
 
-  Platform platform6;
-  platform6.init(200.f, 900.f, 500.f, 30.f, sf::Color::White);
-  platforms.push_back(platform6);
+  Platform level1Platform6;
+  level1Platform6.init(200.f, 900.f, 500.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform6);
 
-  Platform platform7;
-  platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
-  platforms.push_back(platform7);
+  Platform level1Platform7;
+  level1Platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
+  level1Platforms.push_back(level1Platform7);
 
   // Make a spike
-  Spike spike1;
-  spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
-  spikes.push_back(spike1);
+  Spike level1Spike1;
+  level1Spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
+  level1Spikes.push_back(level1Spike1);
 
-  Spike spike2;
-  spike2.init(250.f, 650.f, 35.f, sf::Color::Red);
-  spikes.push_back(spike2);
+  Spike level1Spike2;
+  level1Spike2.init(250.f, 650.f, 35.f, sf::Color::Red);
+  level1Spikes.push_back(level1Spike2);
+
+  // Level 2
+  Platform level2Platform1;
+  level2Platform1.init(300.f, 500.f, 300.f, 30.f, sf::Color::White);
+  level2Platforms.push_back(level2Platform1);
 
   // make text objects
   Text pauseText;
@@ -461,26 +475,50 @@ int main() {
       // Update player, check collisions
       square.handleInput(dt);
       square.update(dt);
-      for (auto& platform : platforms) { // for every platform in vector platforms, check the collision
-        square.checkCollision(platform.getBounds(), CollisionType::Platform);
-      }
-      for (auto& spike : spikes) { // Check all collision with spikes in the spikes vector
-        GameState s = square.checkCollision(spike.getBounds(), CollisionType::Spike);
-        if (s != GameState::Playing) {
-          gameState = s;
-          break;
+      if (level == Level::Level1) {
+        for (auto& platform : level1Platforms) { // for every platform in vector level1Platforms, check the collision
+          square.checkCollision(platform.getBounds(), CollisionType::Platform);
         }
-      }
+        for (auto& spike : level1Spikes) { // Check all collision with spikes in the level1Spikes vector
+          GameState s = square.checkCollision(spike.getBounds(), CollisionType::Spike);
+          if (s != GameState::Playing) {
+            gameState = s;
+            break;
+          }
+        }
 
-      if (gameState == GameState::Playing) { // only check the goal if still playing, otherwise this overwrites a spike's GameOver. we cant have it just in there, because the state can change after we check spike collision and that can break stuff.
-        gameState = square.checkCollision(goal.getBounds(), CollisionType::LevelGoal);
-      }
+        if (gameState == GameState::Playing) { // only check the goal if still playing, otherwise this overwrites a spike's GameOver. we cant have it just in there, because the state can change after we check spike collision and that can break stuff.
+          gameState = square.checkCollision(goal.getBounds(), CollisionType::LevelGoal);
+        }
 
-      for (auto& platform : platforms) { // for every platform in the vector platforms, draw it
-        window.draw(platform.shape);
-      } 
-      for (auto& spike : spikes) {
-        window.draw(spike.shape);
+        for (auto& platform : level1Platforms) { // for every platform in the level1Platforms vector, draw it
+          window.draw(platform.shape);
+        } 
+        for (auto& spike : level1Spikes) {
+          window.draw(spike.shape);
+        }
+      } else if (level == Level::Level2) {
+         for (auto& platform : level2Platforms) { // for every platform in vector level1Platforms, check the collision
+          square.checkCollision(platform.getBounds(), CollisionType::Platform);
+        }
+        for (auto& spike : level2Spikes) { // Check all collision with spikes in the level1Spikes vector
+          GameState s = square.checkCollision(spike.getBounds(), CollisionType::Spike);
+          if (s != GameState::Playing) {
+            gameState = s;
+            break;
+          }
+        }
+
+        if (gameState == GameState::Playing) { // only check the goal if still playing, otherwise this overwrites a spike's GameOver. we cant have it just in there, because the state can change after we check spike collision and that can break stuff.
+          gameState = square.checkCollision(goal.getBounds(), CollisionType::LevelGoal);
+        }
+
+        for (auto& platform : level2Platforms) { // for every platform in the level1Platforms vector, draw it
+          window.draw(platform.shape);
+        } 
+        for (auto& spike : level2Spikes) {
+          window.draw(spike.shape);
+        }   
       }
 
       goal.drawGoal(window);

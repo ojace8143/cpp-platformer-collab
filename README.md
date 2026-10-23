@@ -33,6 +33,7 @@ or:
 - [x] make text struct
 - [ ] make button class
 - [x] lerping
+- [ ] checkpoints??? 1/1 <- yes/no
 - [ ] parallax background
 - [x] game states
 - [ ] gameplay loop
@@ -48,3 +49,5 @@ or:
 i MIGHT have just fallen in love with cpp.....
 
 atp just making an entire game engine (when i'm done i'll make a fork with the actual engine stuff)
+
+deadline in 2 weeks
