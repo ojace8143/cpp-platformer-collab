@@ -6,6 +6,7 @@ clone the repo:\
 
 compile it\
 `make`
+(requires SFML3+ to compile, you may have to change `Makefile` to compile successfully)
 
 then run the binary\
 `./bin/platformer`\
@@ -43,6 +44,7 @@ or:
 - [ ] hire playtesters
 - [x] lock in
 - [ ] cooler name (think of a name for the game)
+- [ ] level select AREA that you get dropped into (daylen 200iq)
 
 ## Notes
 
@@ -51,3 +53,6 @@ i MIGHT have just fallen in love with cpp.....
 atp just making an entire game engine (when i'm done i'll make a fork with the actual engine stuff)
 
 deadline in 2 weeks
+
+## Ai use
+VERY limited ai use. Only used for chore tasks like renaming things, and debugs. All code written by me except for renaming tasks as I have said.
