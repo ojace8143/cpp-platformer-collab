@@ -21,7 +21,8 @@ enum class CollisionType {
 
 enum class Level {
   Level1,
-  Level2
+  Level2,
+  LevelSelect
 };
 
 class Camera {
@@ -201,6 +202,10 @@ class Player {
       shape.setPosition({x, y});
       return GameState::Playing;
     } 
+
+    Level checkCollisionLevelSelector() {
+
+    }
 };
 
 class LevelGoal {
@@ -234,6 +239,32 @@ class LevelGoal {
     sf::FloatRect getBounds() {
       return bounds = sprite.getGlobalBounds();
     }
+};
+
+struct LevelSelector {
+  float x, y;
+  sf::RectangleShape shape;
+  sf::Color color;
+
+  sf::FloatRect bounds = shape.getGlobalBounds();
+
+  void init(float startX, float startY) {
+    x = startX;
+    y = startY;
+
+    shape.setPosition({x, y});
+    shape.setSize({50.f, 50.f});
+
+    shape.setFillColor(sf::Color::Red);
+  }
+
+  sf::FloatRect getBounds() {
+    return bounds = shape.getGlobalBounds();
+  }
+
+  Level setLevel(Level level) {
+    return level;
+  }
 };
 
 struct Platform {
@@ -342,7 +373,7 @@ int main() {
 
   // GameState gameState = GameState::Playing;
   GameState gameState = GameState::MainMenu;
-  Level level = Level::Level1;
+  Level level = Level::LevelSelect;
 
   if (USE_VSYNC) {
     window.setVerticalSyncEnabled(true);
@@ -362,11 +393,13 @@ int main() {
   // Create a vector (vectorrr oh yeahhhhh) with the platforms
   std::vector<Platform> level1Platforms;
   std::vector<Platform> level2Platforms;
+
   std::vector<Spike>    level1Spikes;
   std::vector<Spike>    level2Spikes;
-  std::vector<Text>     mainMenuText;
 
-  // make platforms, add them to the vector platforms as we make them
+  std::vector<Text>     mainMenuText;
+  std::vector<Text>     levelSelectText;
+
   // Level 1
   Platform level1Platform1;
   level1Platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
@@ -396,7 +429,7 @@ int main() {
   level1Platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform7);
 
-  // Make a spike
+  // Make spikes
   Spike level1Spike1;
   level1Spike1.init(25.f, 548.f, 35.f, sf::Color::Red);
   level1Spikes.push_back(level1Spike1);
@@ -409,6 +442,23 @@ int main() {
   Platform level2Platform1;
   level2Platform1.init(300.f, 500.f, 300.f, 30.f, sf::Color::White);
   level2Platforms.push_back(level2Platform1);
+
+  // Level for selecting level or something like that
+  Platform levelSelectPlatform1;
+  levelSelectPlatform1.init(0.f, 0.f, 500.f, 40.f, sf::Color::White);
+
+    // the text objects
+  Text levelSelectInstructions;
+  levelSelectInstructions.init(105.f, -250.f, "CHOOSE A LEVEL", sf::Color::White);
+  levelSelectText.push_back(levelSelectInstructions);
+
+  Text levelSelectHard;
+  levelSelectHard.init(75.f, -150.f, "HARD", sf::Color::Red);
+  levelSelectText.push_back(levelSelectHard);
+
+  Text levelSelectEasy;
+  levelSelectEasy.init(325.f, -150.f, "EASY", sf::Color::Green);
+  levelSelectText.push_back(levelSelectEasy);
 
   // Game state text
   Text pauseText;
@@ -499,6 +549,8 @@ int main() {
         for (auto& spike : level1Spikes) {
           window.draw(spike.shape);
         }
+
+        goal.drawGoal(window);
       } else if (level == Level::Level2) {
          for (auto& platform : level2Platforms) { // for every platform in vector level1Platforms, check the collision
           square.checkCollision(platform.getBounds(), CollisionType::Platform);
@@ -521,9 +573,17 @@ int main() {
         for (auto& spike : level2Spikes) {
           window.draw(spike.shape);
         }   
+
+        goal.drawGoal(window);
+      } else if (level == Level::LevelSelect) {
+        square.checkCollision(levelSelectPlatform1.getBounds(), CollisionType::Platform);
+        window.draw(levelSelectPlatform1.shape);
+
+        for (auto& text : levelSelectText) {
+          text.draw(window);
+        }
       }
 
-      goal.drawGoal(window);
       square.drawPlayer(window);
       camera.handleInputAndUpdate(dt, square.getX(), square.getY());
     }
