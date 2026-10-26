@@ -5,7 +5,7 @@ clone the repo:\
 `git clone https://github.com/ojace8143/cpp-platformer-collab`
 
 compile it\
-`make`
+`make`\
 (requires SFML3+ to compile, you may have to change `Makefile` to compile successfully)
 
 then run the binary\
@@ -16,7 +16,7 @@ or:\
 ### Config.hpp
 config.hpp has options you can change to alter player settings, camera settings, window settings, and costmetics. also includes some debugs. once you make these changes:\
 `make clean` (to remove compiled binaries) then `make` to recompile. then run the binary as normal.\
-or:
+or:\
 `make clean run` (which will run it after you recompile)
 
 ## TODO list
@@ -30,21 +30,19 @@ or:
 - [x] multiple platforms
 - [x] Scrolling (with wasd)
 - [x] plan stuff (toby lock in)
-- [ ] background
+- [ ] background (probably next)
 - [x] make text struct
-- [ ] make button class
 - [x] lerping
 - [ ] checkpoints??? 3/1 <- yes/no (level 2 will have less checkpoints)
 - [ ] parallax background
 - [x] game states
 - [ ] gameplay loop
-- [ ] button struct
 - [x] title screen and pause screen
-- [ ] menus
+- [x] menus (i'll count it since its functional)
 - [ ] hire playtesters
 - [x] lock in
 - [ ] cooler name (think of a name for the game)
-- [ ] level select AREA that you get dropped into (daylen 200iq)
+- [x] level select AREA that you get dropped into (daylen 200iq)
 
 ## Notes
 
