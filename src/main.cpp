@@ -9,6 +9,8 @@ enum class GameState {
   Playing,
   Paused,
   GameOver,
+  SelectedLevelEasy,
+  SelectedLevelHard,
   LevelComplete
 };
 
@@ -16,6 +18,8 @@ enum class GameState {
 enum class CollisionType {
   Platform,
   Spike,
+  LevelSelectorEasy,
+  LevelSelectorHard,
   LevelGoal
 };
 
@@ -79,7 +83,9 @@ class Camera {
     float    getX()    { return x; }
     float    getY()    { return y; }
 
-    void setCenter(float x, float y) {
+    void setCenter(float newX, float newY) {
+      x = newX;
+      y = newY;
       view.setCenter({x,y});
     }
 };
@@ -89,7 +95,10 @@ class Player {
     // Player Variables
     sf::RectangleShape shape;
     bool onGround = false;
-    float x, y, old_x, old_y, x_velocity, y_velocity;
+    float x, y, old_x, old_y;
+
+    float x_velocity = 0.f;
+    float y_velocity = 0.f;
 
     sf::FloatRect bounds = shape.getGlobalBounds();
 
@@ -161,6 +170,17 @@ class Player {
     }
 
     GameState checkCollision(sf::FloatRect hitbox, CollisionType collisionType) {
+
+      if (collisionType == CollisionType::LevelSelectorEasy) {
+        if (shape.getGlobalBounds().findIntersection(hitbox)) {
+         return GameState::SelectedLevelEasy;
+        }  
+      } else if (collisionType == CollisionType::LevelSelectorHard) {
+        if (shape.getGlobalBounds().findIntersection(hitbox)) {
+         return GameState::SelectedLevelHard;
+        }
+      }
+
       // Check x axis, against old y. only x is zeroed here, so it wont interfere with y motion.
       shape.setPosition({x, old_y});
       if (shape.getGlobalBounds().findIntersection(hitbox)) {
@@ -202,10 +222,6 @@ class Player {
       shape.setPosition({x, y});
       return GameState::Playing;
     } 
-
-    Level checkCollisionLevelSelector() {
-
-    }
 };
 
 class LevelGoal {
@@ -253,9 +269,8 @@ struct LevelSelector {
     y = startY;
 
     shape.setPosition({x, y});
-    shape.setSize({50.f, 50.f});
-
-    shape.setFillColor(sf::Color::Red);
+    shape.setSize({35.f, 35.f});
+    shape.setFillColor(sf::Color::Cyan);
   }
 
   sf::FloatRect getBounds() {
@@ -344,7 +359,7 @@ struct Text {
 
     // set up the text
     if (!font.openFromFile(TEXT_FONT_PATH)) {
-      std::cout << "ERROR: could not load font file";
+      std::cout << "ERROR: could not load font file;\n";
     }
 
     text = new sf::Text(font, startText, 24);
@@ -447,18 +462,26 @@ int main() {
   Platform levelSelectPlatform1;
   levelSelectPlatform1.init(0.f, 0.f, 500.f, 40.f, sf::Color::White);
 
+  LevelSelector selectLevelHard;
+  selectLevelHard.init(75.f, -100.f);
+
+  LevelSelector selectLevelEasy;
+  selectLevelEasy.init(350.f, -100.f);
+
     // the text objects
   Text levelSelectInstructions;
   levelSelectInstructions.init(105.f, -250.f, "CHOOSE A LEVEL", sf::Color::White);
   levelSelectText.push_back(levelSelectInstructions);
 
   Text levelSelectHard;
-  levelSelectHard.init(75.f, -150.f, "HARD", sf::Color::Red);
+  levelSelectHard.init(55.f, -150.f, "HARD", sf::Color::Red);
   levelSelectText.push_back(levelSelectHard);
 
   Text levelSelectEasy;
   levelSelectEasy.init(325.f, -150.f, "EASY", sf::Color::Green);
   levelSelectText.push_back(levelSelectEasy);
+
+  //   
 
   // Game state text
   Text pauseText;
@@ -579,8 +602,27 @@ int main() {
         square.checkCollision(levelSelectPlatform1.getBounds(), CollisionType::Platform);
         window.draw(levelSelectPlatform1.shape);
 
+        window.draw(selectLevelEasy.shape);
+        window.draw(selectLevelHard.shape);
+
         for (auto& text : levelSelectText) {
           text.draw(window);
+        }
+
+        GameState s;
+
+        s = square.checkCollision(selectLevelEasy.getBounds(), CollisionType::LevelSelectorEasy);
+        if (s == GameState::SelectedLevelEasy) { 
+          level = Level::Level1; 
+          square.setPos(200.f, 450.f); 
+          camera.setCenter(200.f, 450.f);
+        }
+
+        s = square.checkCollision(selectLevelHard.getBounds(), CollisionType::LevelSelectorHard);
+        if (s == GameState::SelectedLevelHard) { 
+          level = Level::Level2; 
+          square.setPos(350.f, 450.f); 
+          camera.setCenter(350.f, 450.f);
         }
       }
 
