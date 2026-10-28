@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 #include "config.hpp"
 
@@ -63,9 +65,6 @@ class Camera {
         view.setCenter({x,y});
       }
       else if (CAMERA_FOLLOW_PLAYER) {
-        // x = playerX;
-        // y = playerY;
-        // view.setCenter({playerX, playerY});
 
         float t = dt * CAMERA_SMOOTHING;
         if (t > 1.f) { // clamp so the camera doesent overshoot
@@ -163,6 +162,11 @@ class Player {
 
     void drawPlayer(sf::RenderWindow& window) {
       window.draw(shape);
+    }
+
+    void softReset() {
+      x_velocity = 0;
+      y_velocity = 0;
     }
 
     bool canJump() {
@@ -373,7 +377,9 @@ struct Text {
     }
   }
 
-  void setPos(float x,float y) {
+  void setPos(float newX,float newY) {
+    x = newX;
+    y = newY;
     text->setPosition({x,y});
   }
 };
@@ -527,11 +533,14 @@ int main() {
         if (keyPressed->code == sf::Keyboard::Key::Q) {
           if (gameState == GameState::Playing) {
             gameState = GameState::Paused;
-          }
-          else if (gameState == GameState::Paused) {
+          } else if (gameState == GameState::Paused) {
             gameState = GameState::Playing;
-          }
-          else if (gameState == GameState::MainMenu) {
+          } else if (gameState == GameState::MainMenu) {
+            gameState = GameState::Playing;
+          } else if (gameState == GameState::GameOver) {
+            square.softReset();
+            square.setPos(0.f, 0.f);
+            level = Level::LevelSelect;
             gameState = GameState::Playing;
           }
         }

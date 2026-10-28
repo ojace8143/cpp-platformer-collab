@@ -28,7 +28,7 @@
 
 // Camera
 #define CAMERA_SPEED 400.f
-#define CAMERA_FOLLOW_PLAYER true
+#define CAMERA_FOLLOW_PLAYER true 
 #define CAMERA_SMOOTHING 1.5f // higher numbers will make the camera feel snappier
 
 // Globals
