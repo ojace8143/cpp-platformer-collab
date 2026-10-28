@@ -377,7 +377,7 @@ struct Text {
     }
   }
 
-  void setPos(float newX,float newY) {
+  void setPos(float newX, float newY) {
     x = newX;
     y = newY;
     text->setPosition({x,y});
