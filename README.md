@@ -39,6 +39,8 @@ or:\
 - [ ] gameplay loop
 - [x] title screen and pause screen
 - [x] menus (i'll count it since its functional)
+- [x] respawns after death
+- [x] die if you fall off the map
 - [ ] hire playtesters
 - [x] lock in
 - [ ] cooler name (think of a name for the game)
