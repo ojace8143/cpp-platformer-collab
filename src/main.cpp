@@ -494,7 +494,7 @@ int main() {
   pauseText.init(300.f, 400.f, "PAUSED", sf::Color::White);
   
   Text gameOverText;
-  gameOverText.init(300.f, 400.f, "GAME OVER", sf::Color::Red);
+  gameOverText.init(300.f, 400.f, "LOL UR BAD", sf::Color::Red);
 
   Text gameOverPlayAgainText;
   gameOverPlayAgainText.init(-50.f, 500.f, "PRESS Q TO PLAY AGAIN!", sf::Color::White);
@@ -638,6 +638,11 @@ int main() {
         }
       }
 
+      // kill player if they fall out of world
+      if (square.getY() > PLAYER_FALL_DEATH_Y) {
+        gameState = GameState::GameOver;
+      }
+
       square.drawPlayer(window);
       camera.handleInputAndUpdate(dt, square.getX(), square.getY());
     }
@@ -654,6 +659,7 @@ int main() {
 
     if (gameState == GameState::GameOver) {
       gameOverText.setPos(camera.getX(), camera.getY());
+      gameOverPlayAgainText.setPos(camera.getX() - 200, camera.getY() + 100);
       gameOverText.draw(window);
       gameOverPlayAgainText.draw(window);
     }

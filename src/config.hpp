@@ -15,6 +15,7 @@
 #define PLAYER_ACCELERATION 3.f // How fast the plater accelerates when moving
 #define PLAYER_JUMP_SPEED 550.f
 #define PLAYER_MAX_FALL_SPEED 1500.f
+#define PLAYER_FALL_DEATH_Y 2000.f
 
 #define PLAYER_INITIAL_X 250.f
 #define PLAYER_INITIAL_Y -100.f
@@ -29,7 +30,7 @@
 // Camera
 #define CAMERA_SPEED 400.f
 #define CAMERA_FOLLOW_PLAYER true 
-#define CAMERA_SMOOTHING 1.5f // higher numbers will make the camera feel snappier
+#define CAMERA_SMOOTHING 2.f // higher numbers will make the camera feel snappier
 
 // Globals
 #define GRAVITY  22.f  // Hihger the number, higher the gravity
