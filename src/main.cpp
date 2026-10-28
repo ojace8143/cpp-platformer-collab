@@ -487,7 +487,7 @@ int main() {
   levelSelectEasy.init(325.f, -150.f, "EASY", sf::Color::Green);
   levelSelectText.push_back(levelSelectEasy);
 
-  //   
+  //
 
   // Game state text
   Text pauseText;
@@ -495,6 +495,9 @@ int main() {
   
   Text gameOverText;
   gameOverText.init(300.f, 400.f, "GAME OVER", sf::Color::Red);
+
+  Text gameOverPlayAgainText;
+  gameOverPlayAgainText.init(-50.f, 500.f, "PRESS Q TO PLAY AGAIN!", sf::Color::White);
 
   Text levelCompleteText;
   levelCompleteText.init(300.f, 400.f, "YOU FOUND THE GOAL", sf::Color::Green);
@@ -539,7 +542,7 @@ int main() {
             gameState = GameState::Playing;
           } else if (gameState == GameState::GameOver) {
             square.softReset();
-            square.setPos(0.f, 0.f);
+            square.setPos(PLAYER_INITIAL_X, PLAYER_INITIAL_Y);
             level = Level::LevelSelect;
             gameState = GameState::Playing;
           }
@@ -652,6 +655,7 @@ int main() {
     if (gameState == GameState::GameOver) {
       gameOverText.setPos(camera.getX(), camera.getY());
       gameOverText.draw(window);
+      gameOverPlayAgainText.draw(window);
     }
 
     window.setView(camera.getView()); // Update window to show camera view
