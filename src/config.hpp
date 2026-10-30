@@ -25,7 +25,9 @@
 
 #define PLAYER_COLOR sf::Color::Yellow
 
+// Debugs
 #define PLAYER_INFINITE_JUMP false
+#define SHOW_HITBOXES true
 
 // Camera
 #define CAMERA_SPEED 400.f

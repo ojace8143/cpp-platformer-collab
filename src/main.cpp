@@ -588,6 +588,16 @@ int main() {
         } 
         for (auto& spike : level1Spikes) {
           window.draw(spike.shape);
+
+          if (SHOW_HITBOXES) {
+            sf::FloatRect hitbox = spike.getBounds();
+            sf::RectangleShape debug(hitbox.size);
+            debug.setPosition(hitbox.position);
+            debug.setFillColor(sf::Color::Transparent); // so its an outline and not a green box
+            debug.setOutlineColor(sf::Color::Green); // would be red but the spike is red darn
+            debug.setOutlineThickness(1.f);
+            window.draw(debug);
+          }
         }
 
         goal.drawGoal(window);
