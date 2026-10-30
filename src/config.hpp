@@ -35,6 +35,7 @@
 // Globals
 #define GRAVITY  22.f  // Hihger the number, higher the gravity
 #define FRICTION 11.f  // Higher the number, lower the friction. Friction is velocity - velocity/friction
+#define SPIKE_HITBOX_SCALE 0.35f 
 
 // Colors
 #define BACKGROUND_COLOR sf::Color::Black

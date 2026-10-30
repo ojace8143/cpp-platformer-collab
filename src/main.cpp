@@ -328,7 +328,12 @@ struct Spike {
   sf::FloatRect bounds = shape.getGlobalBounds();
 
   sf::FloatRect getBounds() {
-    return bounds = shape.getGlobalBounds();
+    // for gd styled spikes: we just shrink the hitbox to a little square inside of the actual spike.
+    float side = SPIKE_HITBOX_SCALE * 2.f * size;
+    float cx = x + size;
+    float cy = y + size;
+
+    return bounds = sf::FloatRect({cx - side / 2.f, cy - side / 2.f}, {side, side});
   }
 
   void setPos(float newX, float newY) {

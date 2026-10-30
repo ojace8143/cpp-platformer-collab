@@ -45,6 +45,8 @@ or:\
 - [x] lock in
 - [ ] cooler name (think of a name for the game)
 - [x] level select AREA that you get dropped into (daylen 200iq)
+- [x] nerf spike hitboxes
+- [ ] 
 
 ## Notes
 
