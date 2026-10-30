@@ -545,7 +545,7 @@ int main() {
             gameState = GameState::Playing;
           } else if (gameState == GameState::MainMenu) {
             gameState = GameState::Playing;
-          } else if (gameState == GameState::GameOver) {
+          } else if (gameState == GameState::GameOver || gameState == GameState::LevelComplete) {
             square.softReset();
             square.setPos(PLAYER_INITIAL_X, PLAYER_INITIAL_Y);
             level = Level::LevelSelect;
@@ -670,6 +670,8 @@ int main() {
     if (gameState == GameState::LevelComplete) {
       levelCompleteText.setPos(camera.getX(), camera.getY());
       levelCompleteText.draw(window);
+      gameOverPlayAgainText.setPos(camera.getX() - 200, camera.getY() + 100);
+      gameOverPlayAgainText.draw(window);
     }
 
     if (gameState == GameState::GameOver) {
