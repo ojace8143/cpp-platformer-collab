@@ -11,7 +11,7 @@
 #define WINDOW_HEIGHT 600
 
 // Player
-#define PLAYER_SPEED 400.f
+#define PLAYER_SPEED 420.f
 #define PLAYER_ACCELERATION 3.f // How fast the plater accelerates when moving
 #define PLAYER_JUMP_SPEED 550.f
 #define PLAYER_MAX_FALL_SPEED 1500.f
@@ -20,13 +20,13 @@
 #define PLAYER_INITIAL_X 250.f
 #define PLAYER_INITIAL_Y -100.f
 
-#define PLAYER_WIDTH 40.f
-#define PLAYER_HEIGHT 40.f
+#define PLAYER_WIDTH 35.f
+#define PLAYER_HEIGHT 35.f
 
 #define PLAYER_COLOR sf::Color::Yellow
 
 // Debugs
-#define PLAYER_INFINITE_JUMP false
+#define PLAYER_INFINITE_JUMP false 
 #define SHOW_HITBOXES true 
 
 // Camera
