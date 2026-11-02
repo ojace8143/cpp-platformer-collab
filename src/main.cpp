@@ -432,43 +432,85 @@ int main() {
   std::vector<Text>     mainMenuText;
   std::vector<Text>     levelSelectText;
 
-  // Level 1
-  Platform level1Platform1;
-  level1Platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
+  // old Level 1 (kept for reference, replaced by the redesigned easy level below)
+  // Platform level1Platform1;
+  // level1Platform1.init(150.f, 500.f, 300.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform1);
+
+  // Platform level1Platform2;
+  // level1Platform2.init(200.f, 700.f, 200.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform2);
+
+  // Platform level1Platform3;
+  // level1Platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform3);
+
+  // Platform level1Platform4;
+  // level1Platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform4);
+
+  // Platform level1Platform5;
+  // level1Platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform5);
+
+  // Platform level1Platform6;
+  // level1Platform6.init(200.f, 900.f, 500.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform6);
+
+  // Platform level1Platform7;
+  // level1Platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
+  // level1Platforms.push_back(level1Platform7);
+
+  // // spikes
+  // Spike level1Spike1;
+  // level1Spike1.init(60.f, 583.f, 35.f, 0.f, sf::Color::Red);
+  // level1Spikes.push_back(level1Spike1);
+
+  // Spike level1Spike2;
+  // level1Spike2.init(285.f, 685.f, 35.f, 0.f, sf::Color::Red);
+  // level1Spikes.push_back(level1Spike2);
+
+  // Level 1 (easy) - redesigned layout
+  Platform level1Platform1; // start platform; spawn at (200,450) lands here
+  level1Platform1.init(100.f, 500.f, 350.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform1);
 
   Platform level1Platform2;
-  level1Platform2.init(200.f, 700.f, 200.f, 30.f, sf::Color::White);
+  level1Platform2.init(530.f, 550.f, 300.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform2);
 
   Platform level1Platform3;
-  level1Platform3.init(-100.f, 600.f, 400.f, 30.f, sf::Color::White);
+  level1Platform3.init(910.f, 600.f, 320.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform3);
 
   Platform level1Platform4;
-  level1Platform4.init(-600.f, 700.f, 500.f, 50.f, sf::Color::White);
+  level1Platform4.init(1310.f, 640.f, 350.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform4);
 
   Platform level1Platform5;
-  level1Platform5.init(550.f, 600.f, 700.f, 30.f, sf::Color::White);
+  level1Platform5.init(1740.f, 590.f, 280.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform5);
 
   Platform level1Platform6;
-  level1Platform6.init(200.f, 900.f, 500.f, 30.f, sf::Color::White);
+  level1Platform6.init(2100.f, 540.f, 300.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform6);
 
-  Platform level1Platform7;
-  level1Platform7.init(500.f, 800.f, 300.f, 30.f, sf::Color::White);
+  Platform level1Platform7; // final platform, holds the goal
+  level1Platform7.init(2480.f, 500.f, 420.f, 30.f, sf::Color::White);
   level1Platforms.push_back(level1Platform7);
 
-  // spikes
+  // spikes (size 35, center = platform top - 17)
   Spike level1Spike1;
-  level1Spike1.init(60.f, 583.f, 35.f, 0.f, sf::Color::Red);
+  level1Spike1.init(580.f, 533.f, 35.f, 0.f, sf::Color::Red);
   level1Spikes.push_back(level1Spike1);
 
   Spike level1Spike2;
-  level1Spike2.init(285.f, 685.f, 35.f, 0.f, sf::Color::Red);
+  level1Spike2.init(1420.f, 623.f, 35.f, 0.f, sf::Color::Red);
   level1Spikes.push_back(level1Spike2);
+
+  Spike level1Spike3;
+  level1Spike3.init(2200.f, 523.f, 35.f, 0.f, sf::Color::Red);
+  level1Spikes.push_back(level1Spike3);
 
   // level 2
   constexpr float L2_SCALE = 1.62f;
@@ -630,7 +672,9 @@ int main() {
 
   // make level goal objects
   LevelGoal level1Goal;
-  level1Goal.init(900.f, 575.f);
+  // old goal position (kept for reference)
+  // level1Goal.init(900.f, 575.f);
+  level1Goal.init(2780.f, 468.f); // 32x32 flag sitting on platform 7 (top y=500)
 
   LevelGoal level2Goal; // floats above the final platform, as drawn in the sketch
   // dropped 32px from the sketch height so a plain walk-off the end of platform 12 touches the
