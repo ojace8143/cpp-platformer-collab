@@ -398,7 +398,10 @@ struct Text {
 
 int main() {
   sf::RenderWindow window(
-    sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), 
+    sf::VideoMode({
+      static_cast<unsigned>(WINDOW_WIDTH  * WINDOW_SCALE),
+      static_cast<unsigned>(WINDOW_HEIGHT * WINDOW_SCALE)
+    }),
     WINDOW_TITLE,
     sf::Style::Titlebar | sf::Style::Close
   );

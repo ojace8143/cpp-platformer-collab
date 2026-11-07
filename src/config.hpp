@@ -7,8 +7,9 @@
 #define FPS_LIMIT 60
 #define USE_VSYNC true
 #define WINDOW_TITLE  "Platformer"
-#define WINDOW_WIDTH  800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH  800   // logical view size (do not change to zoom)
+#define WINDOW_HEIGHT 600   // logical view size (do not change to zoom)
+#define WINDOW_SCALE  1.7f  // >1 makes the window bigger while keeping the same view/aspect ratio
 
 // Player
 #define PLAYER_SPEED 420.f
